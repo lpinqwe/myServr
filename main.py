@@ -134,8 +134,9 @@ class S(BaseHTTPRequestHandler):
         print("readDATA")
         post_data = self.rfile.read(content_length)
         self._set_headers()
-        self.thread_data(post_data)
-
+        print("POST_THREADNOW")
+        #self.thread_data(post_data)
+        thread_01 = threading.Thread(target=self.thread_data, args=(post_data,)).start()
         print("done")
         # exit()
 
