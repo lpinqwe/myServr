@@ -2,17 +2,17 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import psycopg2
 import traceback
 import threading
-
+import os
+SERVER_PORT=int(os.environ['SERVER_PORT'])
 
 class DatabaseConnection():
 
     def databaseConnection(self):
-        databaseName = "postgres"
-        databaseIP = "o17by.ddns.net"
-        databaseUser = "postgres"
-        databasePassword = "uM5.>BQNY<Jw"
-        databasePort = 15432
-
+        databaseName = os.environ['DB_NAME']
+        databaseIP = os.environ['DB_IP']
+        databaseUser = os.environ['DB_USER']
+        databasePassword = os.environ['DB_PASS']
+        databasePort = os.environ['DB_PORT']
         try:
             return psycopg2.connect(
                 database=databaseName,
@@ -142,8 +142,8 @@ class S(BaseHTTPRequestHandler):
         # exit()
 
 
-def run(server_class=HTTPServer, handler_class=S, port=80):
-    sever_adress = ('192.168.1.197', port)
+def run(server_class=HTTPServer, handler_class=S, port=SERVER_PORT):
+    sever_adress = ('0.0.0.0', port)
     httpd = server_class(sever_adress, handler_class)
     print('Starting htttp.....')
     httpd.serve_forever()
